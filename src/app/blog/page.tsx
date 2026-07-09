@@ -37,10 +37,6 @@ export default function BlogIndex() {
             <p className={styles.eyebrow}>&gt; writing</p>
             <h1 className={styles.heading}>Notes from the build</h1>
             <p className={styles.lede}>{site.blog.description}</p>
-
-            <a href="/blog/rss.xml" className={styles.rssLink}>
-              RSS feed
-            </a>
           </Reveal>
 
           {tags.length > 0 && (
