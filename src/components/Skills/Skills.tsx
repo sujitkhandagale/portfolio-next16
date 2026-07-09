@@ -2,20 +2,18 @@ import type { IconType } from "react-icons";
 import {
   SiTypescript,
   SiJavascript,
-  SiLua,
-  SiMysql,
   SiNextdotjs,
   SiReact,
   SiGreensock,
   SiSass,
   SiNodedotjs,
   SiDiscord,
-  SiMongoose,
+  SiRazorpay,
+  SiMongodb,
   SiRedis,
   SiGit,
   SiDocker,
   SiVercel,
-  SiFigma,
 } from "react-icons/si";
 import Reveal from "@/components/Reveal";
 import { skills } from "@/lib/data";
@@ -25,20 +23,21 @@ import styles from "./Skills.module.scss";
 const registry: Record<string, { Icon: IconType; color: string }> = {
   TypeScript: { Icon: SiTypescript, color: "#3178c6" },
   JavaScript: { Icon: SiJavascript, color: "#f7df1e" },
-  Lua: { Icon: SiLua, color: "#7986e7" },
-  SQL: { Icon: SiMysql, color: "#4479a1" },
   "Next.js": { Icon: SiNextdotjs, color: "#e9ebf2" },
   React: { Icon: SiReact, color: "#61dafb" },
   GSAP: { Icon: SiGreensock, color: "#0ae448" },
   "SCSS Modules": { Icon: SiSass, color: "#cc6699" },
   "Node.js": { Icon: SiNodedotjs, color: "#5fa04e" },
   "Discord.js": { Icon: SiDiscord, color: "#5865f2" },
-  Mongoose: { Icon: SiMongoose, color: "#b4463b" },
+  // BullMQ has no brand icon; it runs on Redis, so it borrows that mark.
   BullMQ: { Icon: SiRedis, color: "#ff4438" },
+  // Razorpay's navy would vanish on the dark surface; use their lighter blue.
+  Razorpay: { Icon: SiRazorpay, color: "#3395ff" },
+  MongoDB: { Icon: SiMongodb, color: "#47a248" },
+  Redis: { Icon: SiRedis, color: "#ff4438" },
   Git: { Icon: SiGit, color: "#f05033" },
   Docker: { Icon: SiDocker, color: "#2496ed" },
   Vercel: { Icon: SiVercel, color: "#e9ebf2" },
-  Figma: { Icon: SiFigma, color: "#f24e1e" },
 };
 
 export default function Skills() {

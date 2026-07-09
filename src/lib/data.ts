@@ -4,15 +4,16 @@
 // ------------------------------------------------------------------
 
 export const profile = {
-  name: "Sujit Khandagale",
-  role: "Software Engineer",
+  name: 'Sujit Khandagale',
+  role: 'Software Engineer',
   // One line for the hero — keep it short and specific.
-  tagline: "I build products end to end — from Discord infrastructure to the dashboards that run it.",
-  location: "India · IST",
-  email: "code.sujit.developer@gmail.com",
+  tagline:
+    'I build products end to end — from Discord infrastructure to the dashboards that run it.',
+  location: 'India · IST',
+  email: 'code.sujit.developer@gmail.com',
   socials: {
-    github: "https://github.com/sujitkhandagale",
-    linkedin: "https://linkedin.com/in/khandagale-sujit/",
+    github: 'https://github.com/sujitkhandagale',
+    linkedin: 'https://linkedin.com/in/khandagale-sujit/',
     x: '',
   },
 };
@@ -25,16 +26,38 @@ export const about = {
     "Outside of shipping, I'm usually reverse-engineering an animation I liked or tightening a component until it feels inevitable.",
   ],
   stats: [
-    { value: "3+", label: "years shipping" },
-    { value: "40+", label: "modules built" },
-    { value: "∞", label: "refactors" },
+    { value: '2', label: 'products shipped' },
+    { value: '129', label: 'commands shipped' },
+    { value: '∞', label: 'refactors' },
   ],
 };
 
-/** One frame in a project's gallery. Omit `src` to render a placeholder. */
+import type { StaticImageData } from 'next/image';
+
+import stromHome from '@/assets/projects/strom/home.png';
+import stromGuilds from '@/assets/projects/strom/guilds.png';
+import stromDashboard from '@/assets/projects/strom/dashboard.png';
+import stromCommands from '@/assets/projects/strom/commands.png';
+import stromSpam from '@/assets/projects/strom/spam.png';
+import stromVoice from '@/assets/projects/strom/voice-tracking.png';
+import stromCareer from '@/assets/projects/strom/career.png';
+
+import eventsHome from '@/assets/projects/eventsvibe/home.png';
+import eventsCities from '@/assets/projects/eventsvibe/cities.png';
+import eventsBookings from '@/assets/projects/eventsvibe/my_bookings.png';
+import eventsAdmin from '@/assets/projects/eventsvibe/admin_dashboard.png';
+import eventsBlogs from '@/assets/projects/eventsvibe/blogs.png';
+import eventsBlogDetails from '@/assets/projects/eventsvibe/blog_details.png';
+
+/**
+ * One frame in a project's gallery. Omit `src` to render a gradient
+ * placeholder. Images are statically imported so next/image can size,
+ * optimise and blur them at build time.
+ */
 export type Screenshot = {
-  src?: string;
+  src?: StaticImageData;
   caption: string;
+  /** Falls back to the caption. Set it when the caption isn't descriptive. */
   alt?: string;
 };
 
@@ -70,205 +93,201 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    id: "strom-bot",
-    index: "01",
-    title: "Strom Bot",
-    subtitle: "A Discord platform that runs itself while you sleep.",
+    id: 'strom',
+    index: '01',
+    title: 'Strom',
+    subtitle: 'A Discord platform that runs itself while you sleep.',
     summary:
-      "A multi-purpose Discord platform: moderation, leveling, giveaways, music, tickets and a real-time dashboard. Node.js + Discord.js v14 backend with a BullMQ job pipeline, wired to a Next.js/TypeScript control panel.",
-    tags: ["Next.js", "TypeScript", "Node.js", "Mongoose", "BullMQ"],
-    year: "2026",
-    href: "https://strombot.com",
+      'A multi-purpose Discord platform: moderation, leveling, giveaways, music, tickets and a real-time dashboard. Node.js + Discord.js v14 backend with a BullMQ job pipeline, wired to a Next.js/TypeScript control panel.',
+    tags: ['Next.js', 'TypeScript', 'Node.js', 'Mongoose', 'BullMQ', 'Redis'],
+    year: '2026',
+    href: 'https://strombot.com',
     featured: true,
-    role: "Solo — architecture, backend, frontend",
-    timeline: "2024 — present",
-    status: "Live",
+    role: 'Solo — architecture, backend, frontend',
+    timeline: '2025 — present',
+    status: 'Live',
     overview: [
-      "Strom Bot started as a single moderation command and turned into a platform. Today it runs moderation, leveling, giveaways, music, ticketing and a live dashboard across every server that invites it — one Node.js process fanning work out to a queue rather than blocking the gateway.",
+      'Strom Bot started as a single moderation command and turned into a platform. Today it runs moderation, leveling, giveaways, music, ticketing and a live dashboard across every server that invites it — one Node.js process fanning work out to a queue rather than blocking the gateway.',
       "The interesting problem was never the Discord API; it was time. Giveaways end, mutes expire, reminders fire, and every one of those has to survive a deploy. A BullMQ pipeline backed by Redis owns all scheduled work, so a restart replays exactly what it should and nothing it shouldn't.",
       "The dashboard is a Next.js app that reads the same Mongoose models the bot writes, so there is a single definition of what a guild's config means. Changing a setting in the browser and watching the bot honour it a second later is the whole product in one gesture.",
     ],
     highlights: [
       {
-        title: "Durable job pipeline",
-        body: "BullMQ + Redis own every timed action — giveaway draws, tempbans, reminders. Jobs are idempotent and survive restarts, so a deploy mid-giveaway is a non-event.",
+        title: 'Durable job pipeline',
+        body: 'BullMQ + Redis own every timed action — giveaway draws, tempbans, reminders. Jobs are idempotent and survive restarts, so a deploy mid-giveaway is a non-event.',
       },
       {
-        title: "Shared type surface",
-        body: "The bot and the dashboard import the same Mongoose schemas and TypeScript types. A config field cannot drift between what the UI writes and what the runtime reads.",
+        title: 'Shared type surface',
+        body: 'The bot and the dashboard import the same Mongoose schemas and TypeScript types. A config field cannot drift between what the UI writes and what the runtime reads.',
       },
       {
-        title: "Sharded gateway",
-        body: "Discord.js v14 sharding with a lightweight IPC layer, so per-guild caches stay warm and the dashboard can query live state without hitting the Discord API.",
+        title: 'Sharded gateway',
+        body: 'Discord.js v14 sharding with a lightweight IPC layer, so per-guild caches stay warm and the dashboard can query live state without hitting the Discord API.',
       },
       {
-        title: "Forty-plus modules",
-        body: "Each feature is a self-registering module with its own commands, events and settings schema. Adding one touches exactly one directory.",
+        title: '129 commands, 12 modules',
+        body: 'Each feature is a self-registering module with its own commands, events and settings schema. Adding one touches exactly one directory — and the command reference builds itself from the registry.',
       },
     ],
     stack: [
-      { group: "Frontend", items: ["Next.js", "TypeScript", "SCSS Modules"] },
-      { group: "Backend", items: ["Node.js", "Discord.js v14", "BullMQ"] },
-      { group: "Data", items: ["MongoDB", "Mongoose", "Redis"] },
-      { group: "Infra", items: ["Docker", "Vercel", "Railway"] },
+      { group: 'Frontend', items: ['Next.js', 'TypeScript', 'SCSS Modules'] },
+      {
+        group: 'Backend',
+        items: ['Node.js', 'Discord.js v14', 'BullMQ'],
+      },
+      { group: 'Data', items: ['MongoDB', 'Mongoose', 'Redis'] },
+      { group: 'Infra', items: ['Docker', 'Vercel', 'Railway'] },
     ],
     screenshots: [
-      { caption: "Server overview — live member and activity counters." },
-      { caption: "Module registry: forty-plus features, toggled per guild." },
-      { caption: "The giveaway scheduler, backed by the BullMQ queue." },
-      { caption: "Audit log stream with rollback on destructive actions." },
+      {
+        src: stromHome,
+        caption:
+          'The landing page — one pitch, and the feature set as a row of chips.',
+        alt: "Strom Bot marketing landing page, headline reading 'Your server, supercharged.'",
+      },
+      {
+        src: stromGuilds,
+        caption:
+          'Server picker. Guilds are filtered by whether the bot is present, who owns them, and what you may manage.',
+        alt: 'A grid of Discord servers, each with a member count and a Manage button.',
+      },
+      {
+        src: stromDashboard,
+        caption:
+          'Guild overview: live member, channel and role counters, the command-prefix panel, and every module one click deep.',
+        alt: 'Strom dashboard overview for a guild, showing stat cards and module tiles.',
+      },
+      {
+        src: stromCommands,
+        caption:
+          '129 commands across 12 categories, filterable by permission and tier — each row expands to its full documentation.',
+        alt: 'Command reference page listing slash commands grouped by category.',
+      },
+      {
+        src: stromSpam,
+        caption:
+          'Spam protection. A look-back window and a message threshold define the trip condition; the punishment and its filters are configured beside it.',
+        alt: 'Spam protection settings with time frame, threshold, auto-punishment and filters.',
+      },
+      {
+        src: stromVoice,
+        caption:
+          'Voice tracking rolls raw session events into a weekly pulse, a leaderboard, and a per-member breakdown.',
+        alt: 'Voice tracking analytics with a bar chart of weekly voice time and a standout member card.',
+      },
+      {
+        src: stromCareer,
+        caption:
+          'The careers page, filtered by team and contract type — the same panel primitives as the dashboard.',
+        alt: 'Strom careers page listing open roles with team and type filters.',
+      },
     ],
   },
   {
-    id: "dashboard",
-    index: "02",
-    title: "Dispatch Console Dashboard",
-    subtitle: "An admin surface built like an instrument panel.",
+    id: 'eventsvibe',
+    index: '02',
+    title: 'Events Vibe',
+    subtitle:
+      'An event management platform for the way India actually celebrates.',
     summary:
-      "A modular admin surface with an entitlement ledger, animated 0fr→1fr row reveals, and security modules like Anti-Nuke and Night Mode built on a consistent 'dispatch console' design language.",
-    tags: ["Next.js", "SCSS Modules", "Design System"],
-    year: "2026",
+      'A city-first marketplace for weddings, birthdays, concerts and venues across India. Guests discover vendors and book them; vendors get orders; an admin console runs payments, refunds, settlements, tickets and an editorial blog behind it all.',
+    tags: ['Next.js', 'TypeScript', 'Node.js', 'MongoDB', 'Razorpay'],
+    year: '2026',
+    href: 'https://eventsvibe.in',
     featured: true,
-    role: "Design system + frontend",
-    timeline: "2025 — present",
-    status: "Live",
+    role: 'Solo — architecture, backend, frontend',
+    timeline: '2025 — present',
+    status: 'Live',
     overview: [
-      "Most dashboards are a table and a hope. This one is designed around a single metaphor — a dispatch console — where every module is a panel, every destructive action is confirmed in place, and nothing ever navigates you away from the thing you were looking at.",
-      "The design language is enforced in code rather than in a Figma file: tokens for surface, border, signal and glow; a fixed set of panel primitives; and an entitlement ledger that decides which panels a given plan may even render. Adding a module means composing primitives, not inventing new ones.",
-      "The motion is the part people notice. Rows expand with a grid-template-rows 0fr→1fr transition instead of a measured max-height, so content of any size opens smoothly and collapses without the classic snap at the end.",
+      'Booking a wedding photographer in Pune and booking a concert venue in Delhi look like the same transaction on paper and nothing alike in practice. Events Vibe is built around that gap: the city comes first, and everything downstream — which vendors exist, what they charge, which categories even make sense — is scoped to it.',
+      'The consumer side is a discovery surface. Seven cities, a category grid that runs from photography and weddings to seminars, birthday parties and concerts, and a booking flow that ends in a real payment. Bookings live in a status track — upcoming, in progress, completed, cancelled — so a customer can always answer "what have I actually paid for" from one page.',
+      'Behind it is an admin console that treats money as the primary object. Orders, paid orders, failed payments, refunds and settlements each get their own view, with order-status analytics plotted across the month. Vendors, users, support tickets and a full editorial blog with categories and authorship run through the same shell.',
     ],
     highlights: [
       {
-        title: "Entitlement ledger",
-        body: "A single source of truth mapping plan → feature → limit. The UI, the API and the bot all ask the same ledger, so an upsell prompt and a 403 can never disagree.",
+        title: 'City-scoped catalogue',
+        body: 'Location is chosen before anything else and threaded through every query. Vendors, categories and pricing resolve per city, so Mumbai and Kolkata are separate marketplaces wearing the same interface.',
       },
       {
-        title: "0fr → 1fr row reveals",
-        body: "Expandable rows animate on grid-template-rows rather than max-height. No magic pixel numbers, no easing that stalls, works for one line or forty.",
+        title: 'Money as a first-class view',
+        body: 'The admin panel separates orders, paid orders, failed payments, refunds and settlements rather than collapsing them into one table. Razorpay webhooks reconcile against each, so a failed capture is visible rather than merely absent.',
       },
       {
-        title: "Anti-Nuke & Night Mode",
-        body: "Security modules with rate-limited trip conditions and a dry-run mode, so an admin can watch what would have happened before arming it.",
+        title: 'Bookings with a status track',
+        body: 'Every reservation moves through upcoming → in progress → completed, or exits to cancelled. The customer, the vendor and the settlement ledger all read the same state.',
+      },
+      {
+        title: 'Editorial as a module',
+        body: 'A full blog — categories, authorship, likes, share targets and a trending feed — authored from the same admin console that handles refunds. Content is a feature of the marketplace, not a separate CMS bolted on.',
       },
     ],
     stack: [
-      { group: "Frontend", items: ["Next.js", "React", "TypeScript"] },
-      { group: "Styling", items: ["SCSS Modules", "Design tokens", "GSAP"] },
-      { group: "Patterns", items: ["Server Components", "Optimistic UI"] },
+      { group: 'Frontend', items: ['Next.js', 'React', 'TypeScript'] },
+      { group: 'Backend', items: ['Node.js', 'REST API', 'Webhooks'] },
+      { group: 'Data', items: ['MongoDB', 'Mongoose'] },
+      { group: 'Payments', items: ['Razorpay', 'Refunds', 'Settlements'] },
     ],
     screenshots: [
-      { caption: "The console shell — panels, not pages." },
-      { caption: "Entitlement ledger resolving a plan to its limits." },
-      { caption: "Anti-Nuke trip conditions in dry-run mode." },
-    ],
-  },
-  {
-    id: "payments",
-    index: "03",
-    title: "Razorpay Integration",
-    subtitle: "A payment flow that fails loudly and recovers quietly.",
-    summary:
-      "End-to-end payment flow: a granular PaymentStatus state machine, HMAC-SHA256 verification, a backend queue drain with auto-cleanup, and browser-compat fixes for in-app and legacy browsers.",
-    tags: ["Next.js", "Razorpay", "Node.js"],
-    year: "2025",
-    role: "Solo — backend + checkout UI",
-    timeline: "2025",
-    status: "Shipped",
-    overview: [
-      "Payments are the one flow where 'mostly works' is indistinguishable from broken. This integration models the whole lifecycle as an explicit PaymentStatus state machine — created, attempted, verified, captured, reconciled, failed — with every transition written before the side effect it authorises.",
-      "Webhooks are verified with HMAC-SHA256 against the raw request body, never the parsed one, and every event is deduplicated by payment id so a retried delivery is a no-op. A backend drain sweeps abandoned intents, releases their reservations, and cleans up after itself.",
-      "The last twenty percent was browsers. Discord's in-app webview, older Android WebViews and a handful of ad blockers all break the checkout iframe differently, so the flow degrades to a full-page redirect when the modal cannot be trusted to render.",
-    ],
-    highlights: [
       {
-        title: "Explicit state machine",
-        body: "PaymentStatus transitions are the only way state changes. An illegal transition throws rather than silently correcting itself, which turned a class of race conditions into loud test failures.",
+        src: eventsHome,
+        caption:
+          'The landing page. A city is picked before anything else — everything below it is scoped to that choice.',
+        alt: "Events Vibe landing page with the headline 'Find your next event or plan the whole thing.'",
       },
       {
-        title: "Raw-body HMAC verification",
-        body: "Webhook signatures are checked against the untouched request body with a timing-safe compare, and every event is idempotent by payment id.",
+        src: eventsCities,
+        caption:
+          'Seven cities, then the category grid — photography, weddings, seminars, birthday parties, concerts.',
+        alt: 'A grid of Indian cities above a row of event category cards.',
       },
       {
-        title: "Self-cleaning queue drain",
-        body: "Abandoned intents expire on a schedule, release their held entitlements and remove their own job records — no cron file, no orphan rows.",
+        src: eventsBookings,
+        caption:
+          'My Bookings: upcoming, in progress, completed and cancelled, with total spend across every reservation.',
+        alt: 'Customer bookings page showing status filters and spend summary cards.',
       },
       {
-        title: "Webview fallbacks",
-        body: "Feature-detects the checkout iframe and falls back to a redirect flow in in-app browsers, so a payment never dead-ends on a blank modal.",
-      },
-    ],
-    stack: [
-      { group: "Frontend", items: ["Next.js", "TypeScript"] },
-      { group: "Backend", items: ["Node.js", "Razorpay SDK", "Webhooks"] },
-      { group: "Data", items: ["MongoDB", "Redis"] },
-      { group: "Security", items: ["HMAC-SHA256", "Idempotency keys"] },
-    ],
-    screenshots: [
-      { caption: "Checkout, with the redirect fallback path highlighted." },
-      { caption: "PaymentStatus transitions rendered as a state diagram." },
-      { caption: "Webhook inspector — signature, dedupe key, outcome." },
-    ],
-  },
-  {
-    id: "instaff",
-    index: "04",
-    title: "instaFF Framework",
-    subtitle: "A FiveM roleplay framework written from an empty file.",
-    summary:
-      "A FiveM roleplay framework written from scratch in Lua — core player registry, server callbacks, client bootstrap, and a slot+weight inventory with a NUI drag-and-drop interface.",
-    tags: ["Lua", "FiveM", "NUI"],
-    year: "2025",
-    role: "Solo — framework author",
-    timeline: "2024 — 2025",
-    status: "Archived",
-    overview: [
-      "instaFF is a roleplay framework for FiveM built without inheriting anyone else's assumptions. The core is a player registry: one authoritative server-side table, mirrored to clients only as far as each client is allowed to see, with every mutation going through a callback rather than a global.",
-      "The inventory is where the design earns its keep. Items carry both a slot cost and a weight, so a character can be limited by bulk and by mass independently, and the NUI layer renders that as a drag-and-drop grid that feels like a game rather than a form.",
-      "Writing it from scratch meant owning the boring parts too — a client bootstrap that survives a resource restart mid-session, and server callbacks with timeouts so a dropped player never leaves a promise hanging.",
-    ],
-    highlights: [
-      {
-        title: "Authoritative player registry",
-        body: "The server holds the only real copy of player state. Clients receive projections, so a modified client can lie to itself and nowhere else.",
+        src: eventsAdmin,
+        caption:
+          'The admin console. Revenue, orders, failed payments, refunds and pending tickets, with order status plotted across the month.',
+        alt: 'Admin dashboard with revenue cards, an order status chart and a recent activity panel.',
       },
       {
-        title: "Slot + weight inventory",
-        body: "Two independent constraints per item, resolved on the server before the NUI ever animates the drop. The UI is optimistic; the rules are not.",
+        src: eventsBlogs,
+        caption:
+          'The editorial surface — a featured carousel, browsable categories, and a trending feed.',
+        alt: 'Events Vibe blog index with a featured article carousel and category cards.',
       },
       {
-        title: "Timeout-safe callbacks",
-        body: "Server callbacks resolve or reject within a bounded window, so a disconnect mid-request cannot strand the caller.",
+        src: eventsBlogDetails,
+        caption:
+          'An article, with likes, share targets and author attribution — all authored from the admin console.',
+        alt: 'A blog article page with a hero image, share buttons and an author card.',
       },
-    ],
-    stack: [
-      { group: "Core", items: ["Lua", "FiveM", "CFX natives"] },
-      { group: "Interface", items: ["NUI", "HTML/CSS", "Vanilla JS"] },
-      { group: "Data", items: ["MySQL", "oxmysql"] },
-    ],
-    screenshots: [
-      { caption: "Drag-and-drop inventory grid, rendered in NUI." },
-      { caption: "Slot and weight constraints resolving on the server." },
-      { caption: "Client bootstrap surviving a mid-session restart." },
     ],
   },
 ];
 
 /** Look up a project by its URL segment. */
 export function getProject(id: string): Project | undefined {
-  return projects.find((p) => p.id === id);
+  return projects.find(p => p.id === id);
 }
 
 /** The project after this one, wrapping around — powers the detail-page footer. */
 export function getNextProject(id: string): Project {
-  const i = projects.findIndex((p) => p.id === id);
+  const i = projects.findIndex(p => p.id === id);
   return projects[(i + 1) % projects.length];
 }
 
 export type Skill = { group: string; items: string[] };
 
+// Four groups — the Skills grid is four columns at the large breakpoint.
 export const skills: Skill[] = [
-  { group: "Languages", items: ["TypeScript", "JavaScript", "Lua", "SQL"] },
-  { group: "Frontend", items: ["Next.js", "React", "GSAP", "SCSS Modules"] },
-  { group: "Backend", items: ["Node.js", "Discord.js", "Mongoose", "BullMQ"] },
-  { group: "Tooling", items: ["Git", "Docker", "Vercel", "Figma"] },
+  { group: 'Languages', items: ['TypeScript', 'JavaScript'] },
+  { group: 'Frontend', items: ['Next.js', 'React', 'GSAP', 'SCSS Modules'] },
+  { group: 'Backend', items: ['Node.js', 'Discord.js', 'BullMQ', 'Razorpay'] },
+  {
+    group: 'Data & Tooling',
+    items: ['MongoDB', 'Redis', 'Docker', 'Vercel', 'Git'],
+  },
 ];

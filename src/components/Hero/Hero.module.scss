@@ -106,65 +106,6 @@
   }
 }
 
-// Terminal-style console card — the hero's signature detail.
-.console {
-  width: min(420px, 100%);
-  border: 1px solid var(--border);
-  border-radius: $radius;
-  background: color-mix(in srgb, var(--surface) 80%, transparent);
-  backdrop-filter: blur(6px);
-  overflow: hidden;
-  font-family: $font-mono;
-}
-
-.consoleBar {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.65rem 0.9rem;
-  border-bottom: 1px solid var(--border-soft);
-
-  span {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--hard-muted);
-
-    &:first-child {
-      background: #f87171;
-    }
-    &:nth-child(2) {
-      background: var(--signal);
-    }
-    &:nth-child(3) {
-      background: #4ade80;
-    }
-  }
-
-  em {
-    margin-left: auto;
-    font-style: normal;
-    font-size: 0.75rem;
-    color: var(--hard-muted);
-  }
-}
-
-.consoleBody {
-  display: block;
-  padding: 0.9rem 1rem 1.1rem;
-  font-size: 0.82rem;
-  line-height: 1.85;
-  color: var(--muted);
-
-  span {
-    display: block;
-
-    &:last-child {
-      color: #4ade80;
-    }
-  }
-}
-
 .scrollCue {
   position: absolute;
   bottom: 2rem;

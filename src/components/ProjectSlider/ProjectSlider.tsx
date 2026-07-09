@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import type { Screenshot } from "@/lib/data";
 import styles from "./ProjectSlider.module.scss";
 
@@ -98,6 +99,11 @@ export default function ProjectSlider({
 
   const caption = slides[active]?.caption;
 
+  // The gallery spans the content column; a card is at most half of it.
+  const sizes = detailed
+    ? "(max-width: 1180px) 100vw, 1180px"
+    : "(max-width: 820px) 100vw, 590px";
+
   return (
     <figure
       className={`${styles.slider} ${detailed ? styles.detailed : ""} ${
@@ -120,26 +126,43 @@ export default function ProjectSlider({
         >
           {slides.map((slide, i) => {
             const hue = (baseHue + i * 24) % 360;
-            const style = slide.src
-              ? { backgroundImage: `url(${slide.src})` }
-              : {
-                  backgroundImage: `linear-gradient(135deg, hsl(${hue} 45% 22%), hsl(${
-                    (hue + 40) % 360
-                  } 55% 14%))`,
-                };
             return (
               <div
                 key={i}
                 className={styles.slide}
-                style={style}
+                style={
+                  slide.src
+                    ? undefined
+                    : {
+                        backgroundImage: `linear-gradient(135deg, hsl(${hue} 45% 22%), hsl(${
+                          (hue + 40) % 360
+                        } 55% 14%))`,
+                      }
+                }
                 aria-label={slide.alt ?? slide.caption}
                 role="group"
                 aria-roledescription="slide"
               >
-                {!slide.src && detailed && (
-                  <span className={styles.placeholder} aria-hidden>
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
+                {slide.src ? (
+                  <Image
+                    src={slide.src}
+                    alt={slide.alt ?? slide.caption}
+                    fill
+                    sizes={sizes}
+                    placeholder="blur"
+                    // Only the first frame is above the fold; the rest are
+                    // off-screen in the scroll track.
+                    priority={detailed && i === 0}
+                    // Native image dragging would fight the pointer-drag handler.
+                    draggable={false}
+                    className={styles.image}
+                  />
+                ) : (
+                  detailed && (
+                    <span className={styles.placeholder} aria-hidden>
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                  )
                 )}
               </div>
             );

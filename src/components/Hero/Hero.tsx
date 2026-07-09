@@ -1,35 +1,13 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { profile } from "@/lib/data";
 import styles from "./Hero.module.scss";
 
-const logLines = [
-  "> booting portfolio…",
-  "> loading projects [4] ✓",
-  "> resolving identity ✓",
-  "> ready.",
-];
-
 export default function Hero() {
   const scope = useRef<HTMLElement>(null);
-  const [logIndex, setLogIndex] = useState(0);
-
-  // Cycle the little "build log" status line.
-  useEffect(() => {
-    const reduce = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    if (reduce) {
-      setLogIndex(logLines.length - 1);
-      return;
-    }
-    if (logIndex >= logLines.length - 1) return;
-    const t = setTimeout(() => setLogIndex((i) => i + 1), 650);
-    return () => clearTimeout(t);
-  }, [logIndex]);
 
   useGSAP(
     () => {
@@ -56,11 +34,6 @@ export default function Hero() {
         .from(
           `.${styles.metaItem}`,
           { opacity: 0, y: 14, stagger: 0.1, duration: 0.7 },
-          "-=0.5"
-        )
-        .from(
-          `.${styles.console}`,
-          { opacity: 0, y: 14, duration: 0.7 },
           "-=0.5"
         )
         .from(
@@ -114,20 +87,6 @@ export default function Hero() {
           >
             LinkedIn ↗
           </a>
-        </div>
-
-        <div className={styles.console} aria-hidden>
-          <div className={styles.consoleBar}>
-            <span />
-            <span />
-            <span />
-            <em>~/portfolio</em>
-          </div>
-          <code className={styles.consoleBody}>
-            {logLines.slice(0, logIndex + 1).map((l, i) => (
-              <span key={i}>{l}</span>
-            ))}
-          </code>
         </div>
       </div>
 

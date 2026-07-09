@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useRef } from "react";
-import Link from "next/link";
-import Reveal from "@/components/Reveal";
-import ProjectSlider from "@/components/ProjectSlider/ProjectSlider";
-import { projects, type Project } from "@/lib/data";
-import styles from "./Projects.module.scss";
+import React, { useRef } from 'react';
+import Link from 'next/link';
+import Reveal from '@/components/Reveal';
+import ProjectSlider from '@/components/ProjectSlider/ProjectSlider';
+import { projects, type Project } from '@/lib/data';
+import styles from './Projects.module.scss';
 
 // Cards preview at most this many screenshots; the detail page shows them all.
 const CARD_SLIDES = 3;
@@ -18,17 +18,17 @@ function ProjectCard({ project }: { project: Project }) {
     const el = ref.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
-    el.style.setProperty("--mx", `${e.clientX - rect.left}px`);
-    el.style.setProperty("--my", `${e.clientY - rect.top}px`);
+    el.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+    el.style.setProperty('--my', `${e.clientY - rect.top}px`);
   };
 
-  // The card is an <article> so the swipe slider and dots don't live inside
+  // The card is an <article>, so the swipe slider and dots don't live inside
   // an anchor; the title carries the link to the case study instead.
   return (
     <article
       ref={ref as never}
       onMouseMove={onMove}
-      className={`${styles.card} ${project.featured ? styles.featured : ""}`}
+      className={`${styles.card} ${project.featured ? styles.featured : ''}`}
     >
       <span className={styles.spotlight} aria-hidden />
 
@@ -56,7 +56,7 @@ function ProjectCard({ project }: { project: Project }) {
         <p className={styles.summary}>{project.summary}</p>
 
         <ul className={styles.tags}>
-          {project.tags.map((t) => (
+          {project.tags.map(t => (
             <li key={t}>{t}</li>
           ))}
         </ul>
@@ -82,8 +82,8 @@ function ProjectCard({ project }: { project: Project }) {
 }
 
 export default function Projects() {
-  const featured = projects.filter((p) => p.featured);
-  const rest = projects.filter((p) => !p.featured);
+  const featured = projects.filter(p => p.featured);
+  const rest = projects.filter(p => !p.featured);
 
   return (
     <section id="projects" className={`section ${styles.projects}`}>
@@ -95,7 +95,7 @@ export default function Projects() {
 
         {featured.length > 0 && (
           <Reveal stagger as="div" className={styles.featuredGrid}>
-            {featured.map((p) => (
+            {featured.map(p => (
               <ProjectCard key={p.id} project={p} />
             ))}
           </Reveal>
@@ -103,7 +103,7 @@ export default function Projects() {
 
         {rest.length > 0 && (
           <Reveal stagger as="div" className={styles.grid}>
-            {rest.map((p) => (
+            {rest.map(p => (
               <ProjectCard key={p.id} project={p} />
             ))}
           </Reveal>
