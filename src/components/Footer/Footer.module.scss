@@ -1,0 +1,37 @@
+@use "../../styles/tokens" as *;
+@use "../../styles/mixins" as *;
+
+.footer {
+  border-top: 1px solid var(--border-soft);
+  padding-block: 2.5rem;
+}
+
+.inner {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+  text-align: center;
+
+  @include up($bp-sm) {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+.mono {
+  font-family: $font-mono;
+  font-size: 0.8rem;
+  color: var(--hard-muted);
+
+  a {
+    color: var(--muted);
+    transition: color 0.2s $ease-out;
+
+    &:hover {
+      color: var(--text);
+    }
+  }
+}

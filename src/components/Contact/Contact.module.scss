@@ -1,0 +1,81 @@
+@use "../../styles/tokens" as *;
+@use "../../styles/mixins" as *;
+
+.inner {
+  @include container;
+}
+
+.card {
+  position: relative;
+  padding: clamp(2.5rem, 6vw, 5rem);
+  border: 1px solid var(--border);
+  border-radius: $radius-lg;
+  background:
+    radial-gradient(120% 140% at 100% 0%, rgba(99, 102, 241, 0.14), transparent 55%),
+    var(--surface);
+  overflow: hidden;
+  text-align: center;
+}
+
+.eyebrow {
+  @include eyebrow;
+  color: var(--primary);
+  margin-bottom: 1.25rem;
+}
+
+.heading {
+  font-size: clamp(2.1rem, 6vw, 4rem);
+  margin-bottom: 1.25rem;
+}
+
+.sub {
+  max-width: 46ch;
+  margin: 0 auto 2.5rem;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+}
+
+.email {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: $font-display;
+  font-weight: 600;
+  font-size: clamp(1.3rem, 4vw, 2.2rem);
+  letter-spacing: -0.02em;
+  padding-bottom: 0.35rem;
+  border-bottom: 2px solid var(--border);
+  transition: border-color 0.25s $ease-out, color 0.25s $ease-out;
+
+  span {
+    font-size: 0.7em;
+    color: var(--primary);
+    transition: transform 0.25s $ease-out;
+  }
+
+  &:hover {
+    border-bottom-color: var(--primary);
+
+    span {
+      transform: translate(3px, -3px);
+    }
+  }
+}
+
+.socials {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 3rem;
+
+  a {
+    font-family: $font-mono;
+    font-size: 0.85rem;
+    color: var(--muted);
+    transition: color 0.2s $ease-out;
+
+    &:hover {
+      color: var(--text);
+    }
+  }
+}

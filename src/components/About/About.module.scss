@@ -1,0 +1,85 @@
+@use "../../styles/tokens" as *;
+@use "../../styles/mixins" as *;
+
+.inner {
+  @include container;
+}
+
+.head {
+  margin-bottom: 3.5rem;
+}
+
+.eyebrow {
+  @include eyebrow;
+  margin-bottom: 1rem;
+  color: var(--signal);
+}
+
+.heading {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.body {
+  display: grid;
+  gap: 3rem;
+
+  @include up($bp-md) {
+    grid-template-columns: 1.4fr 1fr;
+    gap: 4rem;
+  }
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+
+  p {
+    font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+    color: var(--muted);
+
+    &:first-child {
+      color: var(--text);
+      font-size: clamp(1.2rem, 2vw, 1.45rem);
+      line-height: 1.5;
+    }
+  }
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 0;
+  align-content: start;
+
+  @include up($bp-md) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.stat {
+  padding: 1.25rem 1.4rem;
+  border: 1px solid var(--border);
+  border-radius: $radius;
+  background: var(--surface);
+
+  dd {
+    margin: 0;
+    font-family: $font-display;
+    font-weight: 700;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    color: var(--text);
+    line-height: 1;
+  }
+
+  dt {
+    margin-top: 0.5rem;
+    font-family: $font-mono;
+    font-size: 0.78rem;
+    color: var(--hard-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+}

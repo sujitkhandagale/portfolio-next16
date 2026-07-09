@@ -1,0 +1,200 @@
+@use "../../styles/tokens" as *;
+@use "../../styles/mixins" as *;
+
+.inner {
+  @include container;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.eyebrow {
+  @include eyebrow;
+  color: var(--primary);
+}
+
+.heading {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.featuredGrid {
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+
+  @include up($bp-md) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.grid {
+  display: grid;
+  gap: 1.25rem;
+
+  @include up($bp-sm) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: $radius-lg;
+  background: var(--surface);
+  overflow: hidden;
+  transition: border-color 0.3s $ease-out, transform 0.3s $ease-out,
+    background 0.3s $ease-out;
+  isolation: isolate;
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--primary) 55%, var(--border));
+    transform: translateY(-3px);
+  }
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+// The pointer-following glow. Positioned via --mx/--my set in JS.
+.spotlight {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  background: radial-gradient(
+    340px circle at var(--mx, 50%) var(--my, 0%),
+    var(--accent-glow),
+    transparent 60%
+  );
+  transition: opacity 0.3s $ease-out;
+
+  .card:hover & {
+    opacity: 1;
+  }
+}
+
+.featured {
+  @include up($bp-md) {
+    .body {
+      padding: 2.5rem;
+    }
+  }
+}
+
+.cardHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.index {
+  font-family: $font-mono;
+  font-size: 0.8rem;
+  color: var(--signal);
+  letter-spacing: 0.05em;
+}
+
+.year {
+  font-family: $font-mono;
+  font-size: 0.78rem;
+  color: var(--hard-muted);
+}
+
+.title {
+  font-size: clamp(1.35rem, 2.6vw, 1.9rem);
+  margin-bottom: 0.85rem;
+}
+
+.titleLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.arrow {
+  font-size: 0.9em;
+  color: var(--muted);
+  transition: transform 0.25s $ease-out, color 0.25s $ease-out;
+
+  .card:hover & {
+    transform: translateX(4px);
+    color: var(--primary);
+  }
+}
+
+.summary {
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.65;
+  margin-bottom: 1.5rem;
+  max-width: 52ch;
+}
+
+.tags {
+  list-style: none;
+  margin: auto 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  li {
+    font-family: $font-mono;
+    font-size: 0.72rem;
+    padding: 0.32rem 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--muted);
+    background: var(--surface-2);
+  }
+}
+
+.cardFoot {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-soft);
+}
+
+.caseLink,
+.liveLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: $font-mono;
+  font-size: 0.76rem;
+  letter-spacing: 0.04em;
+  transition: color 0.25s $ease-out;
+}
+
+.caseLink {
+  color: var(--primary);
+
+  &:hover {
+    color: var(--text);
+  }
+}
+
+.liveLink {
+  color: var(--hard-muted);
+  margin-left: auto;
+
+  &:hover {
+    color: var(--text);
+  }
+}

@@ -1,0 +1,44 @@
+// ------------------------------------------------------------------
+// Design tokens — edit these and the whole site follows.
+// Exposed as CSS custom properties in globals.scss so they work at
+// runtime (media queries, JS reads) and inside SCSS modules via var().
+// ------------------------------------------------------------------
+
+// Surfaces (dark, layered)
+$bg:          #0a0c11;
+$surface:     #10131b;
+$surface-2:   #171b26;
+$border:      #232838;
+$border-soft: #1a1e2a;
+
+// Text
+$text:        #e9ebf2;
+$muted:       #8b91a4;
+$hard-muted:  #5b6072;
+
+// Accent — indigo/blurple primary, amber for signature marks
+$primary:     #6366f1;
+$primary-600: #5b6af0;
+$accent-glow: rgba(99, 102, 241, 0.35);
+$signal:      #f59e0b; // used for indices, "log" marks, small highlights
+
+// Type — these reference the next/font variables set in layout.tsx,
+// with graceful fallbacks if the fonts haven't loaded.
+$font-display: var(--font-display), "Space Grotesk", system-ui, sans-serif;
+$font-body:    var(--font-body), "Inter", system-ui, sans-serif;
+$font-mono:    var(--font-mono), "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+
+// Layout
+$max-width:   1180px;
+$gutter:      clamp(1.25rem, 4vw, 3rem);
+$radius:      14px;
+$radius-lg:   20px;
+
+// Motion
+$ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+$ease-inout:  cubic-bezier(0.65, 0, 0.35, 1);
+
+// Breakpoints (use with the mixins in _mixins.scss)
+$bp-sm: 560px;
+$bp-md: 820px;
+$bp-lg: 1080px;

@@ -1,0 +1,212 @@
+@use "../../styles/tokens" as *;
+@use "../../styles/mixins" as *;
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.inner {
+  @include container;
+  padding-top: 68px;
+}
+
+.eyebrow {
+  @include eyebrow;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-transform: none;
+  margin-bottom: 1.75rem;
+  color: var(--muted);
+}
+
+.blink {
+  color: var(--primary);
+  font-size: 0.6rem;
+  animation: blink 1.6s steps(1) infinite;
+}
+
+@keyframes blink {
+  0%,
+  60% {
+    opacity: 1;
+  }
+  61%,
+  100% {
+    opacity: 0.25;
+  }
+}
+
+.name {
+  font-size: clamp(3rem, 12vw, 8.5rem);
+  font-weight: 700;
+  line-height: 0.92;
+  margin-bottom: 1.75rem;
+}
+
+// Each word sits in a clipping row; the inner span slides up on load.
+.line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.04em; // room for descenders while clipping
+
+  span {
+    display: block;
+  }
+
+  &:nth-child(2) span {
+    color: transparent;
+    -webkit-text-stroke: 1.4px var(--text);
+    text-stroke: 1.4px var(--text);
+  }
+}
+
+.tagline {
+  max-width: 42ch;
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 2.5rem;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  margin-bottom: 3.5rem;
+}
+
+.metaItem {
+  font-family: $font-mono;
+  font-size: 0.9rem;
+  color: var(--muted);
+  transition: color 0.2s $ease-out, transform 0.2s $ease-out;
+
+  &:hover {
+    color: var(--text);
+    transform: translateY(-1px);
+  }
+}
+
+.primary {
+  color: var(--text);
+  padding: 0.7rem 1.3rem;
+  border-radius: 999px;
+  background: var(--primary);
+  box-shadow: 0 8px 30px -10px var(--accent-glow);
+
+  &:hover {
+    color: #fff;
+    background: var(--primary-600);
+  }
+}
+
+// Terminal-style console card — the hero's signature detail.
+.console {
+  width: min(420px, 100%);
+  border: 1px solid var(--border);
+  border-radius: $radius;
+  background: color-mix(in srgb, var(--surface) 80%, transparent);
+  backdrop-filter: blur(6px);
+  overflow: hidden;
+  font-family: $font-mono;
+}
+
+.consoleBar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.65rem 0.9rem;
+  border-bottom: 1px solid var(--border-soft);
+
+  span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--hard-muted);
+
+    &:first-child {
+      background: #f87171;
+    }
+    &:nth-child(2) {
+      background: var(--signal);
+    }
+    &:nth-child(3) {
+      background: #4ade80;
+    }
+  }
+
+  em {
+    margin-left: auto;
+    font-style: normal;
+    font-size: 0.75rem;
+    color: var(--hard-muted);
+  }
+}
+
+.consoleBody {
+  display: block;
+  padding: 0.9rem 1rem 1.1rem;
+  font-size: 0.82rem;
+  line-height: 1.85;
+  color: var(--muted);
+
+  span {
+    display: block;
+
+    &:last-child {
+      color: #4ade80;
+    }
+  }
+}
+
+.scrollCue {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--hard-muted);
+
+  @include up($bp-md) {
+    display: flex;
+  }
+}
+
+.cueLine {
+  width: 1px;
+  height: 42px;
+  background: linear-gradient(var(--primary), transparent);
+  animation: cue 2s $ease-inout infinite;
+}
+
+@keyframes cue {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  40% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  60% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}

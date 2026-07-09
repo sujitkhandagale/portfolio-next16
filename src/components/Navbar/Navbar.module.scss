@@ -1,0 +1,103 @@
+@use "../../styles/tokens" as *;
+@use "../../styles/mixins" as *;
+
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  transition: background 0.3s $ease-out, border-color 0.3s $ease-out,
+    backdrop-filter 0.3s $ease-out;
+  border-bottom: 1px solid transparent;
+}
+
+.scrolled {
+  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  backdrop-filter: blur(14px) saturate(150%);
+  border-bottom-color: var(--border-soft);
+}
+
+.inner {
+  @include container;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.brand {
+  font-family: $font-display;
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 0 4px var(--accent-glow);
+}
+
+.brandMono {
+  font-family: $font-mono;
+  font-weight: 400;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.links {
+  display: none;
+  gap: 2rem;
+
+  @include up($bp-md) {
+    display: flex;
+  }
+}
+
+.link {
+  font-size: 0.92rem;
+  color: var(--muted);
+  transition: color 0.2s $ease-out;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    height: 1px;
+    width: 0;
+    background: var(--primary);
+    transition: width 0.25s $ease-out;
+  }
+
+  &:hover {
+    color: var(--text);
+
+    &::after {
+      width: 100%;
+    }
+  }
+}
+
+.cta {
+  font-family: $font-mono;
+  font-size: 0.85rem;
+  padding: 0.5rem 0.95rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text);
+  transition: border-color 0.2s $ease-out, background 0.2s $ease-out,
+    transform 0.2s $ease-out;
+
+  &:hover {
+    border-color: var(--primary);
+    background: var(--accent-glow);
+    transform: translateY(-1px);
+  }
+}

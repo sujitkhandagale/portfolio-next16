@@ -1,0 +1,39 @@
+@use "sass:map";
+@use "tokens" as *;
+
+// Media query helpers: @include up($bp-md) { ... }
+@mixin up($bp) {
+  @media (min-width: $bp) {
+    @content;
+  }
+}
+
+@mixin down($bp) {
+  @media (max-width: ($bp - 0.02px)) {
+    @content;
+  }
+}
+
+// Centered content column
+@mixin container {
+  width: 100%;
+  max-width: $max-width;
+  margin-inline: auto;
+  padding-inline: $gutter;
+}
+
+// The small monospace eyebrow used across sections ("// about", "> projects")
+@mixin eyebrow {
+  font-family: $font-mono;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  color: $muted;
+}
+
+// Focus ring — keep keyboard users visible everywhere.
+@mixin focus-ring {
+  outline: 2px solid $primary;
+  outline-offset: 3px;
+  border-radius: 4px;
+}

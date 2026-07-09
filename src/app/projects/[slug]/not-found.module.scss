@@ -1,0 +1,49 @@
+@use "../../../styles/tokens" as *;
+@use "../../../styles/mixins" as *;
+
+.wrap {
+  @include container;
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-block: clamp(7rem, 14vh, 10rem);
+}
+
+.eyebrow {
+  @include eyebrow;
+  color: var(--signal);
+  margin-bottom: 1.25rem;
+}
+
+.title {
+  font-size: clamp(2.2rem, 6vw, 3.8rem);
+  margin-bottom: 1rem;
+}
+
+.body {
+  color: var(--muted);
+  max-width: 46ch;
+  margin-bottom: 2rem;
+}
+
+.link {
+  @include eyebrow;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.25s $ease-out;
+
+  span {
+    transition: transform 0.25s $ease-out;
+  }
+
+  &:hover {
+    color: var(--text);
+
+    span {
+      transform: translateX(-3px);
+    }
+  }
+}

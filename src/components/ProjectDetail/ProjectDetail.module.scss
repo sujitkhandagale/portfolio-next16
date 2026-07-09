@@ -1,0 +1,338 @@
+@use "../../styles/tokens" as *;
+@use "../../styles/mixins" as *;
+
+.page {
+  padding-block: clamp(7rem, 14vh, 10rem) clamp(5rem, 12vh, 9rem);
+}
+
+.inner {
+  @include container;
+}
+
+// --- back link ---------------------------------------------------------
+.back {
+  @include eyebrow;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+  transition: color 0.25s $ease-out;
+
+  span {
+    transition: transform 0.25s $ease-out;
+  }
+
+  &:hover {
+    color: var(--text);
+
+    span {
+      transform: translateX(-3px);
+    }
+  }
+}
+
+// --- header ------------------------------------------------------------
+.head {
+  max-width: 60ch;
+  margin-bottom: clamp(2.5rem, 6vw, 4rem);
+}
+
+.eyebrow {
+  @include eyebrow;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+}
+
+.index {
+  color: var(--signal);
+}
+
+.title {
+  font-size: clamp(2.4rem, 7vw, 4.6rem);
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  line-height: 1.55;
+}
+
+.tags {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  li {
+    font-family: $font-mono;
+    font-size: 0.72rem;
+    padding: 0.32rem 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--muted);
+    background: var(--surface-2);
+  }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.primaryBtn,
+.ghostBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.3rem;
+  border-radius: 999px;
+  font-size: 0.92rem;
+  font-weight: 500;
+  transition: transform 0.25s $ease-out, background 0.25s $ease-out,
+    border-color 0.25s $ease-out;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.primaryBtn {
+  background: var(--primary);
+  color: #fff;
+  border: 1px solid var(--primary);
+
+  &:hover {
+    background: var(--primary-600);
+  }
+}
+
+.ghostBtn {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--primary) 55%, var(--border));
+  }
+}
+
+// --- gallery -----------------------------------------------------------
+.gallery {
+  margin-bottom: clamp(3rem, 8vw, 5.5rem);
+}
+
+// --- overview + sidebar ------------------------------------------------
+.columns {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: clamp(3.5rem, 9vw, 6rem);
+
+  @include up($bp-md) {
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.sectionHeading {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  margin-bottom: 1.75rem;
+}
+
+.sectionMark {
+  font-family: $font-mono;
+  font-size: 0.75em;
+  color: var(--primary);
+}
+
+.paragraph {
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.75;
+  max-width: 64ch;
+
+  & + & {
+    margin-top: 1.25rem;
+  }
+}
+
+.sidebar {
+  // The `Reveal` wrapper is the grid item, so stickiness lives on the inner div.
+  position: relative;
+}
+
+.sidebarInner {
+  display: grid;
+  gap: 1.25rem;
+
+  @include up($bp-md) {
+    position: sticky;
+    top: 6rem;
+  }
+}
+
+.panel {
+  padding: clamp(1.4rem, 2.5vw, 1.9rem);
+  border: 1px solid var(--border);
+  border-radius: $radius-lg;
+  background: var(--surface);
+}
+
+.panelHeading {
+  @include eyebrow;
+  font-size: 0.75rem;
+  color: var(--primary);
+  margin-bottom: 1.4rem;
+}
+
+.stackGroup + .stackGroup {
+  margin-top: 1.4rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--border-soft);
+}
+
+.stackLabel {
+  font-size: 0.82rem;
+  color: var(--hard-muted);
+  margin-bottom: 0.7rem;
+}
+
+.stackItems {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+
+  li {
+    font-family: $font-mono;
+    font-size: 0.74rem;
+    padding: 0.3rem 0.65rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface-2);
+    color: var(--text);
+  }
+}
+
+.meta {
+  margin: 0;
+}
+
+.metaRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+
+  & + & {
+    margin-top: 0.9rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--border-soft);
+  }
+
+  dt {
+    font-size: 0.82rem;
+    color: var(--hard-muted);
+  }
+
+  dd {
+    margin: 0;
+    font-family: $font-mono;
+    font-size: 0.78rem;
+    color: var(--text);
+    text-align: right;
+  }
+}
+
+// --- highlights --------------------------------------------------------
+.highlights {
+  margin-bottom: clamp(3.5rem, 9vw, 6rem);
+}
+
+.highlightGrid {
+  display: grid;
+  gap: 1.25rem;
+
+  @include up($bp-sm) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.highlight {
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border: 1px solid var(--border);
+  border-radius: $radius-lg;
+  background: var(--surface);
+  transition: border-color 0.3s $ease-out, transform 0.3s $ease-out;
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--primary) 55%, var(--border));
+    transform: translateY(-3px);
+  }
+}
+
+.highlightIndex {
+  font-family: $font-mono;
+  font-size: 0.75rem;
+  color: var(--signal);
+  letter-spacing: 0.05em;
+}
+
+.highlightTitle {
+  font-size: 1.15rem;
+  margin: 0.9rem 0 0.7rem;
+}
+
+.highlightBody {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+// --- next project ------------------------------------------------------
+.next {
+  border-top: 1px solid var(--border);
+  padding-top: 2.5rem;
+}
+
+.nextLink {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.nextLabel {
+  @include eyebrow;
+}
+
+.nextTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-family: $font-display;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  transition: color 0.25s $ease-out;
+}
+
+.nextArrow {
+  color: var(--muted);
+  transition: transform 0.3s $ease-out, color 0.3s $ease-out;
+
+  .nextLink:hover & {
+    transform: translateX(8px);
+    color: var(--primary);
+  }
+}
