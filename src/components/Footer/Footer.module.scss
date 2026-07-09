@@ -21,6 +21,28 @@
   }
 }
 
+.links {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+
+  // Hairline separator between the links, not around them.
+  a + a {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: -0.65rem;
+      top: 50%;
+      height: 0.8em;
+      width: 1px;
+      transform: translateY(-50%);
+      background: var(--border);
+    }
+  }
+}
+
 .mono {
   font-family: $font-mono;
   font-size: 0.8rem;

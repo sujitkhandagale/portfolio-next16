@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Space_Grotesk, Inter, JetBrains_Mono } from 'next/font/google';
 import SmoothScroll from '@/components/SmoothScroll';
 import { profile } from '@/lib/data';
+import { abs, site } from '@/lib/site';
 import './globals.scss';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
@@ -26,12 +27,38 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: `${profile.name} — ${profile.role}`,
+  // Absolute base for OG/Twitter/canonical URLs. Without it Next emits
+  // relative ones, which crawlers and social scrapers reject.
+  metadataBase: new URL(site.url),
+  title: {
+    default: site.title,
+    // Page titles render as "Post title — Sujit Khandagale".
+    template: `%s — ${profile.name}`,
+  },
   description: profile.tagline,
+  authors: [{ name: profile.name, url: site.url }],
+  creator: profile.name,
+  alternates: {
+    canonical: '/',
+    types: { 'application/rss+xml': abs('/blog/rss.xml') },
+  },
   openGraph: {
-    title: `${profile.name} — ${profile.role}`,
+    siteName: site.name,
+    locale: site.locale,
+    title: site.title,
     description: profile.tagline,
+    url: site.url,
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: site.title,
+    description: profile.tagline,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large' },
   },
 };
 

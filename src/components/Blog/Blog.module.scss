@@ -1,0 +1,720 @@
+@use '../../styles/tokens' as *;
+@use '../../styles/mixins' as *;
+
+// ------------------------------------------------------------------
+// Blog index, tag pages, and the article surface.
+// Rendered markdown carries literal class names and rehype-pretty-code
+// data attributes, so those selectors are wrapped in :global.
+// ------------------------------------------------------------------
+
+.page,
+.postPage {
+  padding-block: clamp(7rem, 14vh, 10rem) clamp(5rem, 12vh, 9rem);
+}
+
+.inner {
+  @include container;
+}
+
+.back {
+  @include eyebrow;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+  transition: color 0.25s $ease-out;
+
+  span {
+    transition: transform 0.25s $ease-out;
+  }
+
+  &:hover {
+    color: var(--text);
+
+    span {
+      transform: translateX(-3px);
+    }
+  }
+}
+
+.eyebrow {
+  @include eyebrow;
+  color: var(--primary);
+  margin-bottom: 1.25rem;
+}
+
+.heading {
+  font-size: clamp(2.2rem, 6vw, 3.8rem);
+  margin-bottom: 1rem;
+}
+
+.lede {
+  color: var(--muted);
+  max-width: 60ch;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.head {
+  margin-bottom: 2.5rem;
+}
+
+.rssLink {
+  @include eyebrow;
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  transition: border-color 0.25s $ease-out, color 0.25s $ease-out;
+
+  &:hover {
+    color: var(--signal);
+    border-color: color-mix(in srgb, var(--signal) 45%, var(--border));
+  }
+}
+
+.empty {
+  color: var(--muted);
+
+  code {
+    font-family: $font-mono;
+    font-size: 0.85em;
+    color: var(--signal);
+  }
+}
+
+// --- tag bar -----------------------------------------------------------
+.tagBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 3rem;
+}
+
+.tagChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-2);
+  font-family: $font-mono;
+  font-size: 0.74rem;
+  color: var(--muted);
+  transition: border-color 0.25s $ease-out, color 0.25s $ease-out;
+
+  &:hover {
+    color: var(--text);
+    border-color: color-mix(in srgb, var(--primary) 55%, var(--border));
+  }
+}
+
+.tagCount {
+  color: var(--hard-muted);
+}
+
+// --- post cards --------------------------------------------------------
+.grid {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+
+  @include up($bp-sm) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.5rem, 3vw, 2.1rem);
+  border: 1px solid var(--border);
+  border-radius: $radius-lg;
+  background: var(--surface);
+  transition: border-color 0.3s $ease-out, transform 0.3s $ease-out;
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--primary) 55%, var(--border));
+    transform: translateY(-3px);
+  }
+}
+
+.cardFeatured {
+  @include up($bp-md) {
+    padding: 2.75rem;
+
+    .cardTitle {
+      font-size: clamp(1.8rem, 3.4vw, 2.5rem);
+    }
+  }
+}
+
+.cardMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: $font-mono;
+  font-size: 0.74rem;
+  color: var(--hard-muted);
+  margin-bottom: 1rem;
+}
+
+.draftPill {
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--signal) 20%, transparent);
+  color: var(--signal);
+}
+
+.cardTitle {
+  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+  margin-bottom: 0.8rem;
+}
+
+.cardLink {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.cardArrow {
+  color: var(--muted);
+  transition: transform 0.25s $ease-out, color 0.25s $ease-out;
+
+  .card:hover & {
+    transform: translateX(4px);
+    color: var(--primary);
+  }
+}
+
+.cardDescription {
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.7;
+  max-width: 62ch;
+}
+
+.cardTags {
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+
+  a {
+    display: inline-block;
+    font-family: $font-mono;
+    font-size: 0.7rem;
+    padding: 0.28rem 0.65rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--hard-muted);
+    transition: color 0.25s $ease-out, border-color 0.25s $ease-out;
+
+    &:hover {
+      color: var(--text);
+      border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
+    }
+  }
+}
+
+// --- reading progress --------------------------------------------------
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 150;
+  background: transparent;
+  pointer-events: none;
+
+  span {
+    display: block;
+    height: 100%;
+    width: 100%;
+    transform-origin: 0 50%;
+    background: linear-gradient(90deg, var(--primary), var(--signal));
+  }
+}
+
+// --- article header ----------------------------------------------------
+.postHead {
+  max-width: 62ch;
+  margin-bottom: clamp(2.5rem, 6vw, 3.5rem);
+}
+
+.postTags {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+
+  a {
+    font-family: $font-mono;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    color: var(--primary);
+
+    &::before {
+      content: '#';
+      color: var(--hard-muted);
+    }
+
+    &:hover {
+      color: var(--text);
+    }
+  }
+}
+
+.postTitle {
+  font-size: clamp(2.2rem, 5.5vw, 3.6rem);
+  margin-bottom: 1.25rem;
+}
+
+.postDescription {
+  color: var(--muted);
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  line-height: 1.6;
+}
+
+.postMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.75rem;
+  font-family: $font-mono;
+  font-size: 0.76rem;
+  color: var(--hard-muted);
+}
+
+// --- layout: article + sticky TOC --------------------------------------
+.postLayout {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  align-items: start;
+
+  @include up($bp-lg) {
+    grid-template-columns: minmax(0, 1fr) 240px;
+  }
+}
+
+.postAside {
+  order: -1;
+
+  @include up($bp-lg) {
+    order: 0;
+    position: sticky;
+    top: 6rem;
+  }
+}
+
+.toc {
+  padding: 1.25rem 1.4rem;
+  border: 1px solid var(--border);
+  border-radius: $radius;
+  background: var(--surface);
+}
+
+.tocHeading {
+  @include eyebrow;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.tocList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.tocNested {
+  padding-left: 0.9rem;
+}
+
+.tocLink {
+  display: block;
+  padding: 0.35rem 0;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  color: var(--hard-muted);
+  border-left: 2px solid transparent;
+  padding-left: 0.75rem;
+  margin-left: -0.75rem;
+  transition: color 0.2s $ease-out, border-color 0.2s $ease-out;
+
+  &:hover {
+    color: var(--text);
+  }
+}
+
+.tocActive {
+  color: var(--text);
+  border-left-color: var(--primary);
+}
+
+// --- prose -------------------------------------------------------------
+.prose {
+  min-width: 0; // let long code blocks shrink instead of blowing out the grid
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.8;
+
+  > * + * {
+    margin-top: 1.5rem;
+  }
+
+  h2,
+  h3 {
+    color: var(--text);
+    // Clear the fixed navbar when jumping to an anchor.
+    scroll-margin-top: 6rem;
+  }
+
+  h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-top: 3.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-soft);
+  }
+
+  h3 {
+    font-size: clamp(1.2rem, 2.2vw, 1.4rem);
+    margin-top: 2.5rem;
+  }
+
+  // rehype-autolink-headings wraps the heading text in this anchor.
+  :global(.headingAnchor) {
+    color: inherit;
+    position: relative;
+
+    &:hover::before {
+      content: '#';
+      position: absolute;
+      left: -1.2em;
+      color: var(--primary);
+      font-weight: 400;
+    }
+  }
+
+  strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  a:not(:global(.headingAnchor)) {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--primary) 60%, transparent);
+    text-underline-offset: 3px;
+    transition: color 0.2s $ease-out;
+
+    &:hover {
+      color: var(--primary);
+    }
+  }
+
+  ul,
+  ol {
+    padding-left: 1.4rem;
+
+    li + li {
+      margin-top: 0.5rem;
+    }
+
+    li::marker {
+      color: var(--hard-muted);
+    }
+  }
+
+  blockquote {
+    margin-inline: 0;
+    padding: 0.25rem 0 0.25rem 1.5rem;
+    border-left: 2px solid var(--primary);
+    color: var(--text);
+    font-size: 1.1rem;
+    line-height: 1.7;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  hr {
+    margin-block: 3rem;
+    border: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  img {
+    border-radius: $radius;
+    border: 1px solid var(--border);
+  }
+
+  // Inline code, but not code inside a highlighted block.
+  :not(pre) > code {
+    font-family: $font-mono;
+    font-size: 0.86em;
+    padding: 0.15em 0.4em;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface-2);
+    color: var(--text);
+    word-break: break-word;
+  }
+
+  // --- tables ---
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto; // wide tables scroll themselves, never the page
+    border-collapse: collapse;
+    font-size: 0.92rem;
+  }
+
+  th,
+  td {
+    padding: 0.7rem 1rem;
+    border: 1px solid var(--border);
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  th {
+    background: var(--surface-2);
+    color: var(--text);
+    font-family: $font-mono;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  // --- code blocks (rehype-pretty-code, keepBackground: false) ---
+  :global(figure[data-rehype-pretty-code-figure]) {
+    position: relative;
+    margin: 2rem 0;
+  }
+
+  // The language badge, from `data-language` on the pre.
+  :global(figure[data-rehype-pretty-code-figure] pre)::before {
+    content: attr(data-language);
+    position: absolute;
+    top: 0.75rem;
+    right: 0.9rem;
+    font-family: $font-mono;
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--hard-muted);
+    pointer-events: none;
+  }
+
+  pre {
+    position: relative;
+    overflow-x: auto;
+    padding: 2.5rem 1.25rem 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: $radius;
+    background: #0d1117; // github-dark-default's canvas
+    font-size: 0.86rem;
+    line-height: 1.7;
+    tab-size: 2;
+
+    code {
+      display: grid; // one row per line, so line spans fill the width
+      font-family: $font-mono;
+      background: none;
+      border: 0;
+      padding: 0;
+    }
+
+    :global([data-line]) {
+      padding-inline: 0.25rem;
+    }
+  }
+
+  // Injected by CodeCopyButtons after hydration.
+  :global(.codeCopy) {
+    position: absolute;
+    top: 0.55rem;
+    left: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    font-family: $font-mono;
+    font-size: 0.66rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--hard-muted);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s $ease-out, color 0.2s $ease-out;
+
+    &:hover {
+      color: var(--text);
+    }
+
+    &:focus-visible {
+      opacity: 1;
+    }
+  }
+
+  pre:hover :global(.codeCopy) {
+    opacity: 1;
+  }
+
+  @media (hover: none) {
+    :global(.codeCopy) {
+      opacity: 1;
+    }
+  }
+}
+
+// --- article footer ----------------------------------------------------
+.postFoot {
+  max-width: 62ch;
+  margin-top: clamp(3rem, 7vw, 5rem);
+}
+
+.share {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-block: 1.5rem;
+  border-block: 1px solid var(--border);
+}
+
+.shareLabel {
+  @include eyebrow;
+  margin-right: 0.25rem;
+}
+
+.shareLink {
+  font-family: $font-mono;
+  font-size: 0.76rem;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+  transition: color 0.25s $ease-out, border-color 0.25s $ease-out;
+
+  &:hover {
+    color: var(--text);
+    border-color: color-mix(in srgb, var(--primary) 55%, var(--border));
+  }
+}
+
+.pager {
+  display: grid;
+  gap: 1rem;
+  margin-top: 2.5rem;
+
+  @include up($bp-sm) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.pagerLink {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: $radius;
+  background: var(--surface);
+  transition: border-color 0.25s $ease-out, transform 0.25s $ease-out;
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--primary) 55%, var(--border));
+    transform: translateY(-2px);
+  }
+}
+
+.pagerNext {
+  text-align: right;
+}
+
+.pagerLabel {
+  @include eyebrow;
+  color: var(--primary);
+}
+
+.pagerTitle {
+  color: var(--text);
+  font-size: 0.98rem;
+  line-height: 1.4;
+}
+
+.related {
+  margin-top: 3rem;
+}
+
+.relatedHeading {
+  @include eyebrow;
+  color: var(--signal);
+  margin-bottom: 1.25rem;
+}
+
+.relatedList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li + li {
+    margin-top: 0.5rem;
+  }
+
+  a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid transparent;
+    border-radius: $radius;
+    transition: background 0.25s $ease-out, border-color 0.25s $ease-out;
+
+    &:hover {
+      background: var(--surface);
+      border-color: var(--border);
+    }
+  }
+}
+
+.relatedTitle {
+  color: var(--text);
+  font-size: 0.98rem;
+}
+
+.relatedMeta {
+  font-family: $font-mono;
+  font-size: 0.72rem;
+  color: var(--hard-muted);
+}
+
+// --- 404 ---------------------------------------------------------------
+.notFound {
+  @include container;
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-block: clamp(7rem, 14vh, 10rem);
+
+  .back {
+    margin-top: 2rem;
+    margin-bottom: 0;
+  }
+}
