@@ -13,7 +13,7 @@ export const profile = {
   socials: {
     github: "https://github.com/sujitkhandagale",
     linkedin: "https://linkedin.com/in/khandagale-sujit/",
-    x: null,
+    x: '',
   },
 };
 
